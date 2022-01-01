@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 
 from dotenv import load_dotenv
@@ -8,12 +9,20 @@ import random
 
 from commandVars import *
 
+PREFIX = '.'
+
 def main():
-	client = commands.Bot(command_prefix=".", help_command=None)
+	client = commands.Bot(
+		command_prefix=PREFIX,
+		help_command=None,
+		case_insensitive=True,
+		owner_id=(323860733798383617)
+		)
 
 	@client.event
 	async def on_ready():
 		print(f"\"{client.user.name}\" Has logged in!")
+		await client.change_presence(activity=discord.Game(name="with ur mother"))
 
 	@client.command()
 	async def ping(ctx):
@@ -80,6 +89,11 @@ def main():
 		if message.author.bot:
 			return
 
+		# Make sure this isnt a say command, cus then dubas will responed to the deleted message
+		if message.content.lower().startswith(PREFIX + "say"):
+			await client.process_commands(message)
+			return
+
 		if client.user.mentioned_in(message):
 			ctx = await client.get_context(message)
 			await ctx.invoke(client.get_command('ping'))
@@ -90,7 +104,7 @@ def main():
 				name = message.author.nick
 				if (name == None): name = message.author.name
 
-				await message.reply(f'lol {name} is a dubas')
+				await message.reply('lol {} is a dubas'.format(name))
 
 		await client.process_commands(message)
 
