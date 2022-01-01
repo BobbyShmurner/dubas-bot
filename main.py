@@ -1,27 +1,53 @@
-import discord
-
-import os
+from discord.ext import commands
 
 from dotenv import load_dotenv
 
+import os
+import random
 
-client = discord.Client()
-
-dubasRoles = [
-	893205641622085682,
-	893208682588962846,
-	893904856778158080,
-	926796594882428938
-]
-
-helpMessage = {
-	"help": "Displays this message"
-}
+from commandVars import *
 
 def main():
+	client = commands.Bot(command_prefix=".", help_command=None)
+
 	@client.event
 	async def on_ready():
 		print(f"\"{client.user.name}\" Has logged in!")
+
+	@client.command()
+	async def ping(ctx):
+		await ctx.send(random.choice(pingMessages))
+
+	@client.command()
+	async def help(ctx, cmd = None):
+		def GetHelpMessage(cmd):
+			cmdMessage = helpCommands[cmd.lower()]
+
+			if (type(cmdMessage) == str):
+				# No args supplied, so just print the description
+				return f"**{cmd.title()}** - {cmdMessage}"
+			else:
+				# Command has args, so make sure to print them
+				return f"**{cmd.title()} {cmdMessage[0]}** - {cmdMessage[1]}"
+
+		if (cmd == None):
+			# Specific command not specified, so list all commands
+
+			helpMessage = ""
+			for cmd in helpCommands:
+				helpMessage += GetHelpMessage(cmd) + '\n'
+
+			await ctx.send(helpMessage)
+		else:
+			# Specific command specified, so print it
+
+			cmd = cmd.lower()
+
+			if not (cmd in helpCommands):
+				await ctx.send(f"Command **\"{cmd.title()}\"** not found!")
+				return
+
+			await ctx.send(GetHelpMessage(cmd))
 
 	@client.event
 	async def on_message(message):
@@ -38,6 +64,8 @@ def main():
 				if (name == None): name = message.author.name
 
 				await message.reply(f'lol {name} is a dubas')
+
+		await client.process_commands(message)
 
 	# Start Bot
 	load_dotenv()
