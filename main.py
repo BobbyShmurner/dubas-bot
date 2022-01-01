@@ -20,6 +20,15 @@ def main():
 		await ctx.send(random.choice(pingMessages))
 
 	@client.command()
+	async def say(ctx, *args):
+		message = ""
+		for arg in args:
+			message += arg + " "
+
+		await ctx.message.delete()
+		await ctx.send(message)
+
+	@client.command()
 	async def joke(ctx):
 		jokeMessage = await ctx.send(random.choice(jokes))
 		await asyncio.sleep(3)

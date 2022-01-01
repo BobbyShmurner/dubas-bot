@@ -7,6 +7,7 @@ dubasRoles = [
 
 helpCommands = {
 	"help": ("[Command]", "Shows a list of commands, or more info on a specific command"),
+	"say": ("<Message>", "Make me say something!"),
 	"ping": "Shows a message to prove that I do listen to what you say <3",
 	"joke": "I'll tell you the funniest jokes of this century"
 }
