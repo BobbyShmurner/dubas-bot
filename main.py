@@ -2,6 +2,7 @@ from discord.ext import commands
 
 from dotenv import load_dotenv
 
+import asyncio
 import os
 import random
 
@@ -17,6 +18,19 @@ def main():
 	@client.command()
 	async def ping(ctx):
 		await ctx.send(random.choice(pingMessages))
+
+	@client.command()
+	async def joke(ctx):
+		jokeMessage = await ctx.send(random.choice(jokes))
+		await asyncio.sleep(3)
+		latestMessage = await jokeMessage.channel.fetch_message(jokeMessage.channel.last_message_id)
+
+		if (jokeMessage == latestMessage):
+			# Last message sent was the joke, no need to reply
+			await ctx.send("ur mother")
+		else:
+			# There have been new messages since the joke was made, so reply to it
+			await jokeMessage.reply("ur mother")
 
 	@client.command()
 	async def help(ctx, cmd = None):
