@@ -71,6 +71,10 @@ def main():
 		if message.author.bot:
 			return
 
+		if client.user.mentioned_in(message):
+			ctx = await client.get_context(message)
+			await ctx.invoke(client.get_command('ping'))
+
 		# Dubas replay
 		for role in message.author.roles:
 			if role.id in dubasRoles:
@@ -86,4 +90,4 @@ def main():
 	client.run(os.getenv("DISCORD_TOKEN"))
 
 if __name__ == '__main__':
-    main()
+	main()
