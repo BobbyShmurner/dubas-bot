@@ -12,6 +12,24 @@ helpCommands = {
 	"joke": "I'll tell you the funniest jokes of this century"
 }
 
+dubasMessages = [
+	"lol {} is a dubas",
+	"can u belive how dumb {} is?",
+	"fuck me this {} guy is a real dubas",
+	"i thought i was the dubas, until i met {}",
+	"im sorry but who added {} to this server?",
+	"god really fucked up when making {}",
+	"did {} **REALLY** just say something that dumb?",
+	"{} how does it feel to have zero brain cells?",
+	"**Banned: {}\nReason:** is a fucking dubas",
+	"Can someone please explain how {} has survived this long on this plannet?",
+	"Honestly, Hitler had better takes than {}",
+	"If aliens ever come to invaid earth cus we got too smart, just show them {}",
+	"{} **PLEASE SHUT THE FUCK UP, PLEASE!!!**",
+	"I've heard 3 year olds that are smarter than {}",
+	"I need to have a word to {}'s mother about putting you up for adoption"
+]
+
 pingMessages = [
 	"Pong",
 	"I live!!!!",

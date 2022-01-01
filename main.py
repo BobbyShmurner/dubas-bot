@@ -102,9 +102,9 @@ def main():
 		for role in message.author.roles:
 			if role.id in dubasRoles:
 				name = message.author.nick
-				if (name == None): name = message.author.name
+				if (name == None): name = message.author.mention
 
-				await message.reply('lol {} is a dubas'.format(name))
+				await message.reply(random.choice(dubasMessages).format(name))
 
 		await client.process_commands(message)
 
