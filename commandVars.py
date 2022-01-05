@@ -5,6 +5,11 @@ dubasRoles = [
 	926796594882428938
 ]
 
+compMessageId = 926842506174398475
+compMessageChannelId = 926790474507907082
+compEmojiId = 926830670418948096
+compRoleId = 926787644107673641
+
 helpCommands = {
 	"help": ("[Command]", "Shows a list of commands, or more info on a specific command"),
 	"say": ("<Message>", "Make me say something!"),
@@ -58,10 +63,28 @@ jokes = [
 	"Top 10 things scientists still can't answer:\nNumber 1: ",
 	"What do you call a bunch of bald black people in a red car?",
 	"What's brown and sticky?",
-	"Whats th best way to avoid taxes?",
+	"Whats the best way to avoid taxes?",
 	"Guys i figured out how to cure my erectile dysfunction!",
 	"Men want one thing and one thing only:",
 	"What do you call 2 straight men that like to eat ice lollies?",
 	"There's only one thing i want more than Overwatch 2",
 	"And... The funniest phrase of 2021 goes to!!!!"
+]
+
+urMotherTriggers = [
+	"urmother",
+	"yourmother",
+	"urmom",
+	"yourmom",
+	"urmum",
+	"yourmum"
+]
+
+urMotherGifs = [
+	"https://tenor.com/view/bruh-black-guy-looking-at-you-reaction-twitter-when-you-do-anything-gif-21037735",
+	"https://tenor.com/view/thats-crazy-thats-crazy0people-asked-who-asked-gif-22903987",
+	"https://tenor.com/view/damn-you-got-the-whole-squad-laughing-gif-20849744",
+	"https://tenor.com/view/got-the-whole-squad-laughing-kurrco-donkey-kong-gif-23831364",
+	"https://tenor.com/view/the-office-michael-scott-steve-carrell-unamused-meh-gif-16391448",
+	"https://tenor.com/view/not-funny-didnt-laugh-gif-14688388"
 ]

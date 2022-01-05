@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.utils import get
 
 from dotenv import load_dotenv
 
@@ -12,23 +13,31 @@ from commandVars import *
 PREFIX = '.'
 
 def main():
-	client = commands.Bot(
+	bot = commands.Bot(
 		command_prefix=PREFIX,
 		help_command=None,
 		case_insensitive=True,
 		owner_id=(323860733798383617)
 		)
 
-	@client.event
+	@bot.event
 	async def on_ready():
-		print(f"\"{client.user.name}\" Has logged in!")
-		await client.change_presence(activity=discord.Game(name="with ur mother"))
+		print(f"\"{bot.user.name}\" Has logged in!")
 
-	@client.command()
+		# Set Discord Status
+		await bot.change_presence(activity=discord.Game(name="with ur mother"))
+
+		# Added Emoji To OW Comp Message
+		compChannel = await bot.fetch_channel(compMessageChannelId)
+		compMessage = await compChannel.fetch_message(compMessageId)
+
+		await compMessage.add_reaction(bot.get_emoji(compEmojiId))
+
+	@bot.command()
 	async def ping(ctx):
 		await ctx.send(random.choice(pingMessages))
 
-	@client.command()
+	@bot.command()
 	async def say(ctx, *args):
 		message = ""
 		for arg in args:
@@ -37,7 +46,7 @@ def main():
 		await ctx.message.delete()
 		await ctx.send(message)
 
-	@client.command()
+	@bot.command()
 	async def joke(ctx):
 		jokeMessage = await ctx.send(random.choice(jokes))
 		await asyncio.sleep(3)
@@ -50,7 +59,7 @@ def main():
 			# There have been new messages since the joke was made, so reply to it
 			await jokeMessage.reply("ur mother")
 
-	@client.command()
+	@bot.command()
 	async def help(ctx, cmd = None):
 		def GetHelpMessage(cmd):
 			cmdMessage = helpCommands[cmd.lower()]
@@ -81,9 +90,32 @@ def main():
 
 			await ctx.send(GetHelpMessage(cmd))
 
-	@client.event
+	@bot.command()
+	async def CompRemove(ctx, member : discord.Member, name="compRemove"):
+		role = get(member.guild.roles, id=compRoleId) 
+
+		channel = await bot.fetch_channel(compMessageChannelId)
+		message = await channel.fetch_message(compMessageId)
+		emoji = bot.get_emoji(compEmojiId)
+
+		await member.remove_roles(role)
+		await message.remove_reaction(emoji, member) 
+
+	@bot.event
+	async def on_raw_reaction_add(payload):
+		if (payload.message_id != compMessageId): return
+
+		channel = await bot.fetch_channel(payload.channel_id)
+		message = await channel.fetch_message(compMessageId)
+		member = await bot.fetch_user(payload.user_id)
+		reaction = get(message.reactions, emoji=payload.emoji)
+
+		if (payload.emoji.id != compEmojiId or reaction.count > 7):
+			await message.remove_reaction(payload.emoji, member)
+
+	@bot.event
 	async def on_message(message):
-		if message.author == client.user:
+		if message.author == bot.user:
 			return
 
 		if message.author.bot:
@@ -91,12 +123,17 @@ def main():
 
 		# Make sure this isnt a say command, cus then dubas will responed to the deleted message
 		if message.content.lower().startswith(PREFIX + "say"):
-			await client.process_commands(message)
+			await bot.process_commands(message)
 			return
 
-		if client.user.mentioned_in(message):
-			ctx = await client.get_context(message)
-			await ctx.invoke(client.get_command('ping'))
+		if bot.user.mentioned_in(message):
+			ctx = await bot.get_context(message)
+			await ctx.invoke(bot.get_command('ping'))
+
+		for trigger in urMotherTriggers:
+			if (trigger in message.content.lower().replace(" ", "")):
+				await message.reply(random.choice(urMotherGifs))
+				break
 
 		# Dubas replay
 		for role in message.author.roles:
@@ -106,11 +143,11 @@ def main():
 
 				await message.reply(random.choice(dubasMessages).format(name))
 
-		await client.process_commands(message)
+		await bot.process_commands(message)
 
 	# Start Bot
 	load_dotenv()
-	client.run(os.getenv("DISCORD_TOKEN"))
+	bot.run(os.getenv("DISCORD_TOKEN"))
 
 if __name__ == '__main__':
 	main()
