@@ -96,5 +96,6 @@ urMotherGifs = [
 	"https://tenor.com/view/unfunny-awkward-flightreacrs-flightreacts-imdontai-gif-20743787",
 	"https://tenor.com/view/stare-awkward-funny-what-huh-gif-5344114",
 	"https://tenor.com/view/giancarlo-far-cry-far-cry-far-cry6-gif-23478415",
-	"https://tenor.com/view/kanye-west-unamused-no-reaction-gif-4092766"
+	"https://tenor.com/view/kanye-west-unamused-no-reaction-gif-4092766",
+	":moyai: :moyai: :moyai: :moyai: :moyai: :moyai: :moyai: :moyai: :moyai: :moyai:"
 ]
