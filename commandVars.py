@@ -86,5 +86,6 @@ urMotherGifs = [
 	"https://tenor.com/view/damn-you-got-the-whole-squad-laughing-gif-20849744",
 	"https://tenor.com/view/got-the-whole-squad-laughing-kurrco-donkey-kong-gif-23831364",
 	"https://tenor.com/view/the-office-michael-scott-steve-carrell-unamused-meh-gif-16391448",
-	"https://tenor.com/view/not-funny-didnt-laugh-gif-14688388"
+	"https://tenor.com/view/not-funny-didnt-laugh-gif-14688388",
+	"https://tenor.com/view/unfunny-awkward-flightreacrs-flightreacts-imdontai-gif-20743787"
 ]
