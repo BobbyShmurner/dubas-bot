@@ -77,7 +77,13 @@ urMotherTriggers = [
 	"urmom",
 	"yourmom",
 	"urmum",
-	"yourmum"
+	"yourmum",
+	"femaleparent",
+	"femaleguardian",
+	"urmama",
+	"yourmama",
+	"urmamma",
+	"yourmamma"
 ]
 
 urMotherGifs = [
