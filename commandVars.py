@@ -87,5 +87,8 @@ urMotherGifs = [
 	"https://tenor.com/view/got-the-whole-squad-laughing-kurrco-donkey-kong-gif-23831364",
 	"https://tenor.com/view/the-office-michael-scott-steve-carrell-unamused-meh-gif-16391448",
 	"https://tenor.com/view/not-funny-didnt-laugh-gif-14688388",
-	"https://tenor.com/view/unfunny-awkward-flightreacrs-flightreacts-imdontai-gif-20743787"
+	"https://tenor.com/view/unfunny-awkward-flightreacrs-flightreacts-imdontai-gif-20743787",
+	"https://tenor.com/view/stare-awkward-funny-what-huh-gif-5344114",
+	"https://tenor.com/view/giancarlo-far-cry-far-cry-far-cry6-gif-23478415",
+	"https://tenor.com/view/kanye-west-unamused-no-reaction-gif-4092766"
 ]
