@@ -12,13 +12,16 @@ compEmojiId = 926830670418948096
 compRoleId = 926787644107673641
 compPermsRoleId = 926785754745675788
 
+modRoleId = 926636721431515207
+
 helpCommands = {
 	"help": ("[Command]", "Shows a list of commands, or more info on a specific command"),
 	"say": ("<Message>", "Make me say something!"),
 	"saychannel": ("<ChannelId> <Message>", "Make me say something in a specific channel!"),
 	"ping": "Shows a message to prove that I do listen to what you say <3",
 	"joke": "I'll tell you the funniest jokes of this century",
-	"compremove": ("<@User>", "Remove a user from the current team comp")
+	"compremove": ("<@User>", "Remove a user from the current team comp"),
+	"delete": ("<Amount>", "Deletes a number of messages from a channel. **NOTE: *Please*** *be careful with this...*")
 }
 
 dubasMessages = [

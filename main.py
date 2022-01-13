@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.member import Member
 from discord.utils import get
 
 from dotenv import load_dotenv
@@ -42,6 +43,17 @@ def main():
 	def HasRole(member, roleId):
 		role = discord.utils.find(lambda r: r.id == roleId, member.guild.roles)
 		return role in member.roles
+
+	def IsMod(member):
+		return member.guild_permissions.administrator or HasRole(member, modRoleId)
+
+	async def FailIfNotMod(ctx):
+		if (not IsMod(ctx.author)):
+			replyMsg = await ctx.channel.send(f"{ctx.author.mention} You need to be a Mod to run this command!")
+			await replyMsg.delete(delay=3) 
+			return True
+
+		return False
 
 	@bot.event
 	async def on_ready():
@@ -133,17 +145,40 @@ def main():
 			await ctx.send(GetHelpMessage(cmd))
 
 	@bot.command()
-	async def compRemove(ctx, member : discord.Member, name="compRemove"):
-		await ctx.message.delete(delay=5)
+	async def delete(ctx, amount):
+		await ctx.message.delete()
+
+		if await FailIfNotMod(ctx):
+			return
+
+		try:
+			int(amount)
+		except:
+			replyMsg = await ctx.channel.send(f"Invalid Argument \"{amount}\" for **Amount**")
+			await replyMsg.delete(delay=3)
+
+		progressMsg = await ctx.channel.send(f"Deleting **{amount}** Messages...")
+		def IsntProgressMsg(m): return m != progressMsg
+		
+		deleted = await ctx.channel.purge(limit=int(amount) + 1, check=IsntProgressMsg)
+		await progressMsg.delete()
+
+		replyMsg = await ctx.channel.send(f"Deleted **{len(deleted)}** Messages!")
+		await replyMsg.delete(delay=3)
+
+
+	@bot.command()
+	async def compRemove(ctx, member : discord.Member):
+		await ctx.message.delete(delay=3)
 
 		if not HasRole(ctx.author, compPermsRoleId):
 			replyMsg = await ctx.channel.send(f"{ctx.author.mention} You are not an Overwatch Gamer!")
-			await replyMsg.delete(delay=5) 
+			await replyMsg.delete(delay=3) 
 			return
 
 		if (member.id == bot.user.id):
 			replyMsg = await ctx.channel.send(f"{ctx.author.mention} Dont even think bout it, bitch")
-			await replyMsg.delete(delay=5) 
+			await replyMsg.delete(delay=3) 
 			return
 
 		channel = await bot.fetch_channel(compMessageChannelId)
@@ -152,7 +187,7 @@ def main():
 
 		await message.remove_reaction(emoji, member)
 		replyMsg = await ctx.channel.send(f"Removed {member.mention} from the comp")
-		await replyMsg.delete(delay=5) 
+		await replyMsg.delete(delay=3) 
 
 	@bot.event
 	async def on_raw_reaction_add(payload):
