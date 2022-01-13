@@ -188,7 +188,7 @@ def main():
 			await bot.process_commands(message)
 			return
 
-		if bot.user.mentioned_in(message):
+		if f"<@!{bot.user.id}>" in message.content:
 			ctx = await bot.get_context(message)
 			await ctx.invoke(bot.get_command('ping'))
 

@@ -27,18 +27,16 @@ dubasMessages = [
 	"god really fucked up when making {}",
 	"did {} **REALLY** just say something that dumb?",
 	"{} how does it feel to have zero brain cells?",
-	"**Banned: {}\nReason:** is a fucking dubas",
 	"Can someone please explain how {} has survived this long on this plannet?",
 	"Honestly, Hitler had better takes than {}",
 	"If aliens ever come to invaid earth cus we got too smart, just show them {}",
 	"{} **PLEASE SHUT THE FUCK UP, PLEASE!!!**",
 	"I've heard 3 year olds that are smarter than {}",
-	"I need to have a word to {}'s mother about putting you up for adoption"
+	"I need to have a word to {}'s mother about putting you up for adoption",
+	"Jesus didnt die for people like {}"
 ]
 
 pingMessages = [
-	"Pong",
-	"I live!!!!",
 	"What the fuck do you want?",
 	"**Who dares to summon me!?**",
 	"**(fuck me not this guy again...)**\nYes! what do you want now? :)",
@@ -55,8 +53,9 @@ pingMessages = [
 	"Yes Yes, I am talking to you mother",
 	"She made fuckin ***BEANZZZZZ WHAT THE FUUUUCCCKKK????***",
 	"Go eat chocolate u fat pig.",
-	"*dies*",
-	"..."
+	"\**dies*\*",
+	"Bro...\nStfu",
+	"Did i say you could speak..?"
 ]
 
 jokes = [
