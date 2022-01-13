@@ -5,8 +5,9 @@ dubasRoles = [
 	926796594882428938
 ]
 
-compMessageId = 926842506174398475
+compMessageText = "If you are part of the current team comp, react to this message to be able to speak in <#926786399561191446>"
 compMessageChannelId = 926790474507907082
+compVoiceChannelId = 926786399561191446
 compEmojiId = 926830670418948096
 compRoleId = 926787644107673641
 

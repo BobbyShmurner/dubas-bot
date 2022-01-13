@@ -11,6 +11,7 @@ import random
 from commandVars import *
 
 PREFIX = '.'
+compMessageId = None
 
 def main():
 	bot = commands.Bot(
@@ -20,8 +21,28 @@ def main():
 		owner_id=(323860733798383617)
 		)
 
+	async def UpdateCompMessage(message):
+		messageText = compMessageText
+		emoji = bot.get_emoji(compEmojiId)
+
+		reaction = get(message.reactions, emoji=emoji)
+
+		if (reaction != None and reaction.count != 1):
+			messageText += "\n\nThe current team comp consits of:\n"
+
+			async for user in reaction.users():
+				if user.id == bot.user.id: continue
+
+				member = await message.guild.fetch_member(user.id)
+				messageText += f"** - {member.mention}**\n"
+
+
+		await message.edit(content=messageText)
+
 	@bot.event
 	async def on_ready():
+		global compMessageId
+
 		print(f"\"{bot.user.name}\" Has logged in!")
 
 		# Set Discord Status
@@ -29,7 +50,11 @@ def main():
 
 		# Added Emoji To OW Comp Message
 		compChannel = await bot.fetch_channel(compMessageChannelId)
-		compMessage = await compChannel.fetch_message(compMessageId)
+		await compChannel.purge()
+
+		compMessage = await compChannel.send("penis\n\n*(hehehehe)*")
+		compMessageId = compMessage.id
+		await UpdateCompMessage(compMessage)
 
 		await compMessage.add_reaction(bot.get_emoji(compEmojiId))
 
@@ -45,6 +70,17 @@ def main():
 
 		await ctx.message.delete()
 		await ctx.send(message)
+
+	@bot.command()
+	async def saychannel(ctx, channelId, *args):
+		message = ""
+		for arg in args:
+			message += arg + " "
+
+		channel = await bot.fetch_channel(channelId)
+
+		await ctx.message.delete()
+		await channel.send(message)
 
 	@bot.command()
 	async def joke(ctx):
@@ -91,27 +127,53 @@ def main():
 			await ctx.send(GetHelpMessage(cmd))
 
 	@bot.command()
-	async def CompRemove(ctx, member : discord.Member, name="compRemove"):
-		role = get(member.guild.roles, id=compRoleId) 
-
+	async def compRemove(ctx, member : discord.Member, name="compRemove"):
+	
 		channel = await bot.fetch_channel(compMessageChannelId)
 		message = await channel.fetch_message(compMessageId)
 		emoji = bot.get_emoji(compEmojiId)
+		author = ctx.message.author
 
-		await member.remove_roles(role)
-		await message.remove_reaction(emoji, member) 
+		await ctx.message.delete(delay=5)
+		if (member.id == bot.user.id):
+			replyMsg = await ctx.channel.send(f"{author.mention} Dont even think bout it, bitch")
+			await replyMsg.delete(delay=5) 
+			return
+
+		await message.remove_reaction(emoji, member)
+		replyMsg = await ctx.channel.send(f"Removed {member.mention} from the comp")
+		await replyMsg.delete(delay=5) 
 
 	@bot.event
 	async def on_raw_reaction_add(payload):
 		if (payload.message_id != compMessageId): return
 
 		channel = await bot.fetch_channel(payload.channel_id)
-		message = await channel.fetch_message(compMessageId)
-		member = await bot.fetch_user(payload.user_id)
+		user = await bot.fetch_user(payload.user_id)
+		message = await channel.fetch_message(payload.message_id)
 		reaction = get(message.reactions, emoji=payload.emoji)
 
 		if (payload.emoji.id != compEmojiId or reaction.count > 7):
-			await message.remove_reaction(payload.emoji, member)
+			await message.remove_reaction(payload.emoji, user)
+		else:
+			member = await message.guild.fetch_member(user.id)
+			role = get(member.guild.roles, id=compRoleId)
+			
+			await member.add_roles(role)
+			await UpdateCompMessage(message)
+
+	@bot.event
+	async def on_raw_reaction_remove(payload):
+		if (payload.message_id != compMessageId): return
+
+		user = await bot.fetch_user(payload.user_id)
+		channel = await bot.fetch_channel(payload.channel_id)
+		message = await channel.fetch_message(payload.message_id)
+		member = await message.guild.fetch_member(user.id)
+		role = get(member.guild.roles, id=compRoleId)
+		
+		await member.remove_roles(role)
+		await UpdateCompMessage(message)
 
 	@bot.event
 	async def on_message(message):
@@ -138,8 +200,7 @@ def main():
 		# Dubas replay
 		for role in message.author.roles:
 			if role.id in dubasRoles:
-				name = message.author.nick
-				if (name == None): name = message.author.mention
+				name = message.author.mention
 
 				await message.reply(random.choice(dubasMessages).format(name))
 
