@@ -67,10 +67,10 @@ pingMessages = [
 jokes = [
 	"What do you call a dinosaur who loves to bake cakes?",
 	"Top 10 things scientists still can't answer:\nNumber 1: ",
-	"What do you call a bunch of bald black people in a red car?",
+	"What do you call a bag filled with red cabbages?",
 	"What's brown and sticky?",
 	"Whats the best way to avoid taxes?",
-	"Guys i figured out how to cure my erectile dysfunction!",
+	"Guys i figured out how to cure my crippling depression!",
 	"Men want one thing and one thing only:",
 	"What do you call 2 straight men that like to eat ice lollies?",
 	"There's only one thing i want more than Overwatch 2",
