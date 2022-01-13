@@ -21,7 +21,8 @@ helpCommands = {
 	"ping": "Shows a message to prove that I do listen to what you say <3",
 	"joke": "I'll tell you the funniest jokes of this century",
 	"compremove": ("<@User>", "Remove a user from the current team comp"),
-	"delete": ("<Amount>", "Deletes a number of messages from a channel. **NOTE: *Please*** *be careful with this...*")
+	"delete": ("<Amount>", "Deletes a number of messages from a channel. **NOTE: *Please*** *be careful with this...*"),
+	"perish": "i dies :("
 }
 
 dubasMessages = [
