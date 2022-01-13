@@ -62,25 +62,27 @@ def main():
 	async def ping(ctx):
 		await ctx.send(random.choice(pingMessages))
 
-	@bot.command()
-	async def say(ctx, *args):
-		message = ""
-		for arg in args:
-			message += arg + " "
-
-		await ctx.message.delete()
-		await ctx.send(message)
-
-	@bot.command()
-	async def saychannel(ctx, channelId, *args):
+	async def SayMessage(ctx, channelId, *args):
 		message = ""
 		for arg in args:
 			message += arg + " "
 
 		channel = await bot.fetch_channel(channelId)
+		if (ctx.message.reference != None) and (ctx.message.reference.channel_id == channelId):
+			messageReply = await channel.fetch_message(ctx.message.reference.message_id)
+			await messageReply.reply(message)
+		else:
+			await channel.send(message)
 
 		await ctx.message.delete()
-		await channel.send(message)
+
+	@bot.command()
+	async def say(ctx, *args):
+		await SayMessage(ctx, ctx.channel.id, *args)
+
+	@bot.command()
+	async def saychannel(ctx, channelId, *args):
+		await SayMessage(ctx, channelId, *args)
 
 	@bot.command()
 	async def joke(ctx):
