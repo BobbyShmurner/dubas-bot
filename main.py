@@ -188,7 +188,7 @@ def main():
 			await bot.process_commands(message)
 			return
 
-		if f"<@!{bot.user.id}>" in message.content:
+		if f"<@!{bot.user.id}>" in message.content and not message.content.lower().startswith(PREFIX):
 			ctx = await bot.get_context(message)
 			await ctx.invoke(bot.get_command('ping'))
 
