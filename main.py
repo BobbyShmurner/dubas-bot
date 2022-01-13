@@ -168,6 +168,10 @@ def main():
 
 
 	@bot.command()
+	async def perish(ctx):
+		await ctx.channel.send("\**dies*\*")
+
+	@bot.command()
 	async def compRemove(ctx, member : discord.Member):
 		await ctx.message.delete(delay=3)
 
