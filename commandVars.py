@@ -10,6 +10,7 @@ compMessageChannelId = 926790474507907082
 compVoiceChannelId = 926786399561191446
 compEmojiId = 926830670418948096
 compRoleId = 926787644107673641
+compPermsRoleId = 926785754745675788
 
 helpCommands = {
 	"help": ("[Command]", "Shows a list of commands, or more info on a specific command"),

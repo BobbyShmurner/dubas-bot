@@ -39,6 +39,10 @@ def main():
 
 		await message.edit(content=messageText)
 
+	def HasRole(member, roleId):
+		role = discord.utils.find(lambda r: r.id == roleId, member.guild.roles)
+		return role in member.roles
+
 	@bot.event
 	async def on_ready():
 		global compMessageId
@@ -130,17 +134,21 @@ def main():
 
 	@bot.command()
 	async def compRemove(ctx, member : discord.Member, name="compRemove"):
-	
+		await ctx.message.delete(delay=5)
+
+		if not HasRole(ctx.author, compPermsRoleId):
+			replyMsg = await ctx.channel.send(f"{ctx.author.mention} You are not an Overwatch Gamer!")
+			await replyMsg.delete(delay=5) 
+			return
+
+		if (member.id == bot.user.id):
+			replyMsg = await ctx.channel.send(f"{ctx.author.mention} Dont even think bout it, bitch")
+			await replyMsg.delete(delay=5) 
+			return
+
 		channel = await bot.fetch_channel(compMessageChannelId)
 		message = await channel.fetch_message(compMessageId)
 		emoji = bot.get_emoji(compEmojiId)
-		author = ctx.message.author
-
-		await ctx.message.delete(delay=5)
-		if (member.id == bot.user.id):
-			replyMsg = await ctx.channel.send(f"{author.mention} Dont even think bout it, bitch")
-			await replyMsg.delete(delay=5) 
-			return
 
 		await message.remove_reaction(emoji, member)
 		replyMsg = await ctx.channel.send(f"Removed {member.mention} from the comp")
