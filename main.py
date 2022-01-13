@@ -102,10 +102,10 @@ def main():
 
 			if (type(cmdMessage) == str):
 				# No args supplied, so just print the description
-				return f"**{cmd.title()}** - {cmdMessage}"
+				return f"**.{cmd.title()}** - {cmdMessage}"
 			else:
 				# Command has args, so make sure to print them
-				return f"**{cmd.title()} {cmdMessage[0]}** - {cmdMessage[1]}"
+				return f"**.{cmd.title()} {cmdMessage[0]}** - {cmdMessage[1]}"
 
 		if (cmd == None):
 			# Specific command not specified, so list all commands
