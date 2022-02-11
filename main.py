@@ -11,6 +11,9 @@ import random
 
 from commandVars import *
 
+from gtts import gTTS
+from io import BytesIO
+
 PREFIX = '.'
 compMessageId = None
 
@@ -170,6 +173,58 @@ def main():
 	@bot.command()
 	async def perish(ctx):
 		await ctx.channel.send("\**dies*\*")
+
+	@bot.command(name="join")
+	async def joinVc(ctx):
+		await ctx.message.delete()
+
+		if ctx.author.voice == None:
+			message = await ctx.channel.send(f"ur not in a vc u dubas")
+			await message.delete(delay=3)
+
+			return
+
+		voice_channel = ctx.author.voice.channel
+
+		if ctx.voice_client != None:
+			message = await ctx.channel.send("im already in a vc u dubas")
+			await message.delete(delay=3)
+
+		if voice_channel != None:
+			vc = await voice_channel.connect()
+
+			message = await ctx.channel.send(f"Joining **{ctx.author.voice.channel.name}...**")
+			await message.delete(delay=3)
+
+	@bot.command(name="leave")
+	async def leaveVc(ctx):
+		await ctx.message.delete()
+
+		if ctx.voice_client != None:
+			await ctx.guild.voice_client.disconnect()
+
+			message = await ctx.channel.send(f"Left the vc")
+			await message.delete(delay=3)
+		else:
+			message = await ctx.channel.send("im not in a vc u dubas")
+			await message.delete(delay=3)
+
+	@bot.command()
+	async def sayVc(ctx, *args):
+		if ctx.voice_client == None:
+			await ctx.invoke(bot.get_command('join'))
+		else:
+			# We only delete the message if we dont invoke join, cus it'll delete the message for us
+			await ctx.message.delete()
+
+		message = ""
+		for arg in args:
+			message += arg + " "
+
+		gTTS(message, lang='en', tld='co.in').save("tts.mp3")
+
+		audio = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("tts.mp3"))
+		ctx.guild.voice_client.play(audio)
 
 	@bot.command()
 	async def compRemove(ctx, member : discord.Member):
